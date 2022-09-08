@@ -5,29 +5,13 @@ var debouncer = null;
 
 function scrollIntoView(el, className, callback){
 	//validation
-	if (!el){
-		try {console.warn("scrollIntoView(): missing arguments")}
-		catch (e) {};
-		return;
-	}
+	if (!el) return console.warn("scrollIntoView(): missing HTML element");
 	if ("string" === typeof el){
 		el = document.querySelector(el);
-		if (!el){
-			try {console.warn("scrollIntoView(): element not found in document")}
-			catch (e) {};
-			return;
-		}
+		if (!el) return console.warn("scrollIntoView(): HTML element not found in document");
 	}
-	else if (!el.nodeType || el.nodeType !== 1){
-		try {console.warn("scrollIntoView(): element or element selector expected as first argument")}
-		catch (e) {};
-		return;
-	}
-	if (!className){
-		try {console.warn("scrollIntoView(): className and/or callback expected as arguments")}
-		catch (e) {};
-		return;
-	}
+	else if (!el.nodeType || el.nodeType !== 1) return console.warn("scrollIntoView(): HTML element or element selector expected as first argument");
+	if (!className) return console.warn("scrollIntoView(): className and/or callback expected as arguments");
 	//start listening for scrolling event
 	if (!elems.length) window.addEventListener("scroll", handleScroll);
 	//add to observer array
@@ -35,6 +19,7 @@ function scrollIntoView(el, className, callback){
 	if ("string" === typeof className) obj.className = className;
 	else if ("function" === typeof className) obj.callback = className;
 	if (!obj.callback && "function" === typeof callback) obj.callback = callback;
+    obj.inviewport = false;
 	elems.push(obj);
 	checkElems();
 }
@@ -46,11 +31,17 @@ function handleScroll(e){
 
 function checkElems(){
 	elems.forEach(obj => {
-		if (elementInViewport(obj.el)){
-			if (obj.className) obj.el.classList.add(obj.className);
-			if (obj.callback) obj.callback.call(obj.el);
+        const {el, className, callback, inviewport} = obj;
+		if (elementInViewport(el)){
+			if (className && !el.classList.contains(className)) el.classList.add(className);
+			if (callback && !inviewport) callback.call(el, true); //just entered viewport
+            obj.inviewport = true;
 		}
-		else if (obj.className) obj.el.classList.remove(obj.className);
+		else {
+            if (className && el.classList.contains(className)) el.classList.remove(className);
+            if (callback && inviewport) callback.call(el, false); //just left viewport
+            obj.inviewport = false;
+        }
 	});
 }
 

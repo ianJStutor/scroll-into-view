@@ -50,7 +50,7 @@ p.inviewport {
 //main.js
 import { scrollIntoView } from "./scroll-into-view.js";
 const element = document.querySelector("p");
-scrollIntoView(element, "inviewport");
+scrollIntoView(element, "inviewport", isInViewport => console.log(this, "in viewport:", isInViewport));
 ```
 
 ### Documentation
@@ -67,4 +67,4 @@ export { scrollIntoView };
 function scrollIntoView(element, classnameOrFunc, [func]) {}
 ```
 
-The <code>element</code> is a required HTML element containing text. 
+The <code>element</code> is a required HTML element containing text.
