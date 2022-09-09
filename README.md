@@ -68,3 +68,11 @@ function scrollIntoView(element, classnameOrFunc, [func]) {}
 ```
 
 The <code>element</code> is a required HTML element containing text.
+
+If the second argument, <code>classnameOrFunc</code> is a string, then it will be used as a class name. When the HTML element enters the viewport the class name will be added to the element's class list. When the HTML element leaves the viewport the class name will be removed from the element's class list.
+
+If the second argument, <code>classnameOrFunc</code> is a function, then it will be called both when the HTML element first enters the viewport and when it first leaves the viewport. In both cases the <code>this</code> context keyword will point to the HTML element itself. When entering the viewport, the function will be called with the argument <code>true</code> and when leaving the viewport, the function will be called with the argument <code>false</code>.
+
+If the second argument, <code>classnameOrFunc</code> is a function, then a third argument will be ignored.
+
+If the second argument isn't a function but the third argument, <code>func</code>, is a function, then the class name second argument will be added/removed from the HTML element (as above) and the <code>func</code> function will be called (as above) as well.
