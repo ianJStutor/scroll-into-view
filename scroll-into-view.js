@@ -21,6 +21,7 @@ function scrollIntoView(el, className, callback){
 	if (!obj.callback && "function" === typeof callback) obj.callback = callback;
     obj.inviewport = false;
 	elems.push(obj);
+    //starting in viewport?
 	checkElems();
 }
 
