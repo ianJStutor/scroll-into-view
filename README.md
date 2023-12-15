@@ -1,3 +1,5 @@
+> NOTE: There are experimental CSS properties that might achieve the same result but without the use of JavaScript. If your browser supports <code>scroll-timeline</code> or <code>animation-timeline</code> with the values <code>scroll()</code> or <code>view()</code>, then consider using CSS.
+
 # Scroll into View
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
